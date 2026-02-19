@@ -1,5 +1,5 @@
-#ifndef WIFICONNECTION_H
-#define WIFICONNECTION_H
+#ifndef WIFI_CONNECTION_ENTITY_H
+#define WIFI_CONNECTION_ENTITY_H
 
 #include <StandardDefines.h>
 
