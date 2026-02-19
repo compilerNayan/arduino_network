@@ -6,14 +6,14 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 include(FetchContent)
 
-# Fetch cpp_logger (only dependency)
+# Fetch springbootplusplus
 FetchContent_Declare(
-    cpp_logger
-    GIT_REPOSITORY https://github.com/compilerNayan/cpp_logger.git
+    springbootplusplus
+    GIT_REPOSITORY https://github.com/compilerNayan/springbootplusplus.git
     GIT_TAG        main
 )
 
-FetchContent_MakeAvailable(cpp_logger)
+FetchContent_MakeAvailable(springbootplusplus)
 
 # Header-only INTERFACE library (no source files); just includes cpp_logger
 add_library(arduino_network INTERFACE)
@@ -27,15 +27,21 @@ target_include_directories(arduino_network INTERFACE
     $<INSTALL_INTERFACE:include>
 )
 
-if(TARGET cpp_logger::cpp_logger)
-    target_link_libraries(arduino_network INTERFACE cpp_logger::cpp_logger)
-elseif(TARGET cpp_logger)
-    target_link_libraries(arduino_network INTERFACE cpp_logger)
+# Link to springbootplusplus
+# Try the namespaced target first, fallback to non-namespaced
+if(TARGET springbootplusplus::springbootplusplus)
+    target_link_libraries(arduino_network INTERFACE springbootplusplus::springbootplusplus)
+elseif(TARGET springbootplusplus)
+    target_link_libraries(arduino_network INTERFACE springbootplusplus)
 else()
-    FetchContent_GetProperties(cpp_logger)
-    if(cpp_logger_SOURCE_DIR)
+    # Fallback: manually add include directory if target doesn't exist
+    FetchContent_GetProperties(springbootplusplus)
+    if(springbootplusplus_SOURCE_DIR)
         target_include_directories(arduino_network INTERFACE
-            $<BUILD_INTERFACE:${cpp_logger_SOURCE_DIR}/src>
+            $<BUILD_INTERFACE:${springbootplusplus_SOURCE_DIR}/src>
         )
     endif()
 endif()
+
+# Note: For INTERFACE libraries, we don't need to add header files to target_sources
+# The include directories are sufficient for consumers to find the headers
