@@ -8,6 +8,7 @@
 /**
  * Thread-safe implementation: all state is updated under a mutex so reads/writes are consistent.
  */
+/* @Component */
 class WifiConnectionStatusStore : public IWifiConnectionStatusStore {
     Private mutable std::mutex mutex_;
     Private Bool networkConnected_{false};
