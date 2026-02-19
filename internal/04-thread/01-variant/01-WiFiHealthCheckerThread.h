@@ -10,7 +10,6 @@
 /**
  * Periodically ensures network connectivity, then sleeps (e.g. for use in a thread loop).
  */
-/* @Component */
 class WiFiHealthCheckerThread : public IRunnable {
     /* @Autowired */
     Private IWifiConnectionManagerPtr wifiConnectionManager;

@@ -10,7 +10,6 @@
 /**
  * Periodically verifies internet connectivity, then sleeps (e.g. for use in a thread loop).
  */
-/* @Component */
 class InternetHealthCheckerThread : public IInternetHealthCheckerThread {
     /* @Autowired */
     Private IInternetConnectionManagerPtr internetConnectionManager;
