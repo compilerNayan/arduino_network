@@ -1,0 +1,6 @@
+#ifndef IWIFICONNECTIONMANAGER_PUBLIC_H
+#define IWIFICONNECTIONMANAGER_PUBLIC_H
+
+#include "../01-interface/03-IWifiConnectionManager.h"
+
+#endif // IWIFICONNECTIONMANAGER_PUBLIC_H
