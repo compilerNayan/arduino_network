@@ -3,6 +3,7 @@
 
 #ifdef ARDUINO
 #include <Arduino.h>
+#include <ILogger.h>
 #include "ISample.h"
 
 
