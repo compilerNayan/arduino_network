@@ -9,7 +9,8 @@
     "url": "https://github.com/compilerNayan/arduino_network.git"
   },
   "dependencies": {
-    "springbootplusplus": "https://github.com/compilerNayan/springbootplusplus.git"
+    "springbootplusplus": "https://github.com/compilerNayan/springbootplusplus.git",
+    "01_osal": "https://github.com/compilerNayan/01_osal.git"
   },
   "license": "MIT",
   "frameworks": "arduino",

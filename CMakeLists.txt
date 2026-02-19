@@ -6,6 +6,13 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 include(FetchContent)
 
+# Fetch 01_osal (OSAL_Core, OSAL_WiFi)
+FetchContent_Declare(
+    01_osal
+    GIT_REPOSITORY https://github.com/compilerNayan/01_osal.git
+    GIT_TAG        main
+)
+
 # Fetch springbootplusplus
 FetchContent_Declare(
     springbootplusplus
@@ -13,7 +20,7 @@ FetchContent_Declare(
     GIT_TAG        main
 )
 
-FetchContent_MakeAvailable(springbootplusplus)
+FetchContent_MakeAvailable(01_osal springbootplusplus)
 
 # Header-only INTERFACE library (no source files); just includes cpp_logger
 add_library(arduino_network INTERFACE)
@@ -27,6 +34,13 @@ target_include_directories(arduino_network INTERFACE
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
     $<INSTALL_INTERFACE:include>
 )
+
+# Link to 01_osal (provides osal/OSAL_Core.h, osal/OSAL_WiFi.h)
+if(TARGET 01_osal::01_osal)
+    target_link_libraries(arduino_network INTERFACE 01_osal::01_osal)
+elseif(TARGET 01_osal)
+    target_link_libraries(arduino_network INTERFACE 01_osal)
+endif()
 
 # Link to springbootplusplus
 # Try the namespaced target first, fallback to non-namespaced
