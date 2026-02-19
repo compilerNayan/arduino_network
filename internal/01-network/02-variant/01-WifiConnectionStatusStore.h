@@ -3,65 +3,59 @@
 
 #include "../01-interface/01-IWifiConnectionStatusStore.h"
 #include <StandardDefines.h>
-#include <atomic>
+#include <mutex>
 
 /**
- * Thread-safe implementation using atomics for network, WiFi and hotspot status.
+ * Thread-safe implementation: all state is updated under a mutex so reads/writes are consistent.
  */
 class WifiConnectionStatusStore : public IWifiConnectionStatusStore {
-    Private std::atomic<bool> networkConnected_{false};
-    Private std::atomic<bool> wifiConnected_{false};
-    Private std::atomic<bool> hotspotConnected_{false};
-    Private std::atomic<ULong> wifiConnectionId_{0};
-    Private std::atomic<ULong> hotspotConnectionId_{0};
-    Private std::atomic<ULong> networkConnectionId_{0};
+    Private mutable std::mutex mutex_;
+    Private Bool networkConnected_{false};
+    Private Bool wifiConnected_{false};
+    Private Bool hotspotConnected_{false};
+    Private ULong wifiConnectionId_{0};
+    Private ULong hotspotConnectionId_{0};
+    Private ULong networkConnectionId_{0};
 
     Public Bool IsNetworkConnected() const override {
-        return networkConnected_.load(std::memory_order_relaxed);
+        std::lock_guard<std::mutex> lock(mutex_);
+        return networkConnected_;
     }
 
     Public Bool IsWifiConnected() const override {
-        return wifiConnected_.load(std::memory_order_relaxed);
+        std::lock_guard<std::mutex> lock(mutex_);
+        return wifiConnected_;
     }
 
     Public Bool IsHotspotConnected() const override {
-        return hotspotConnected_.load(std::memory_order_relaxed);
+        std::lock_guard<std::mutex> lock(mutex_);
+        return hotspotConnected_;
     }
 
     Public ULong GetWifiConnectionId() const override {
-        return wifiConnectionId_.load(std::memory_order_relaxed);
+        std::lock_guard<std::mutex> lock(mutex_);
+        return wifiConnectionId_;
     }
 
     Public ULong GetHotspotConnectionId() const override {
-        return hotspotConnectionId_.load(std::memory_order_relaxed);
+        std::lock_guard<std::mutex> lock(mutex_);
+        return hotspotConnectionId_;
     }
 
     Public ULong GetNetworkConnectionId() const override {
-        return networkConnectionId_.load(std::memory_order_relaxed);
+        std::lock_guard<std::mutex> lock(mutex_);
+        return networkConnectionId_;
     }
 
-    Public Void SetNetworkConnected(Bool connected) override {
-        networkConnected_.store(static_cast<bool>(connected), std::memory_order_relaxed);
-    }
-
-    Public Void SetWifiConnected(Bool connected) override {
-        wifiConnected_.store(static_cast<bool>(connected), std::memory_order_relaxed);
-    }
-
-    Public Void SetHotspotConnected(Bool connected) override {
-        hotspotConnected_.store(static_cast<bool>(connected), std::memory_order_relaxed);
-    }
-
-    Public Void SetWifiConnectionId(ULong connectionId) override {
-        wifiConnectionId_.store(connectionId, std::memory_order_relaxed);
-    }
-
-    Public Void SetHotspotConnectionId(ULong connectionId) override {
-        hotspotConnectionId_.store(connectionId, std::memory_order_relaxed);
-    }
-
-    Public Void SetNetworkConnectionId(ULong connectionId) override {
-        networkConnectionId_.store(connectionId, std::memory_order_relaxed);
+    Public Void SetState(Bool networkConnected, Bool wifiConnected, Bool hotspotConnected,
+                        ULong wifiConnectionId, ULong hotspotConnectionId, ULong networkConnectionId) override {
+        std::lock_guard<std::mutex> lock(mutex_);
+        networkConnected_ = static_cast<bool>(networkConnected);
+        wifiConnected_ = static_cast<bool>(wifiConnected);
+        hotspotConnected_ = static_cast<bool>(hotspotConnected);
+        wifiConnectionId_ = wifiConnectionId;
+        hotspotConnectionId_ = hotspotConnectionId;
+        networkConnectionId_ = networkConnectionId;
     }
 };
 

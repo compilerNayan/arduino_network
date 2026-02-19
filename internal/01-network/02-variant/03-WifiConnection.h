@@ -26,12 +26,7 @@ class WifiConnection : public IWifiConnection {
     Private ULong hotspotConnectionId_ = 0;
 
     Private Void UpdateStore(Bool networkConnected, Bool wifiConnected, ULong wifiConnectionId, Bool hotspotConnected, ULong hotspotConnectionId, ULong networkConnectionId) {
-        statusStore->SetNetworkConnected(networkConnected);
-        statusStore->SetWifiConnected(wifiConnected);
-        statusStore->SetHotspotConnected(hotspotConnected);
-        statusStore->SetWifiConnectionId(wifiConnectionId);
-        statusStore->SetHotspotConnectionId(hotspotConnectionId);
-        statusStore->SetNetworkConnectionId(networkConnectionId);
+        statusStore->SetState(networkConnected, wifiConnected, hotspotConnected, wifiConnectionId, hotspotConnectionId, networkConnectionId);
     }
 
     Private Bool TryConnectToWifi(const StdString& ssid, const StdString& password) {
