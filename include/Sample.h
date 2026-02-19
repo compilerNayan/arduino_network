@@ -4,14 +4,23 @@
 #ifdef ARDUINO
 #include <Arduino.h>
 #include <ILogger.h>
-#include "ISample.h"
 
+#include "../internal/01-network/01-interface/01-IWifiConnectionStatusStore.h"
+#include "../endpoint/service/IWifiService.h"
+
+#include "ISample.h"
 
 /* @Component */
 class Sample : public ISample {
 
     /* @Autowired */
     Private ILoggerPtr logger;
+
+    /* @Autowired */
+    Private IWifiServicePtr wifiService;
+    /* @Autowired */
+    Private IWifiConnectionStatusStorePtr statusStore;
+
 
 
 public:
