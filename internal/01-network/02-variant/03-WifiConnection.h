@@ -8,6 +8,8 @@
 #include <Thread.h>
 #include <ILogger.h>
 #include "service/IWifiService.h"
+#include "../../../endpoint/service/WifiService.h"
+#include "01-WifiConnectionStatusStore.h"
 #include "entity/WifiCredentials.h"
 #include <WiFi.h>
 #include <Arduino.h>
