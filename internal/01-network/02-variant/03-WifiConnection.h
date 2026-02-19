@@ -48,6 +48,7 @@ class WifiConnection : public IWifiConnection {
         }
         if (WiFi.status() == WL_CONNECTED) {
             wifiConnectionId_ = (ULong)random(1, 2147483647);
+            hotspotConnectionId_ = 0;
             UpdateStore(true, true, wifiConnectionId_, false, 0);
             logger->Info(Tag::Untagged, StdString("[WifiConnection] WiFi connected successfully! IP Address: " + StdString(WiFi.localIP().toString().c_str())));
             return true;
@@ -113,8 +114,9 @@ class WifiConnection : public IWifiConnection {
         Bool apStarted = WiFi.softAP("SmartBoard", nullptr);
         if (apStarted) {
             currentMode = "hotspot";
-            wifiConnectionId_ = (ULong)random(1, 2147483647);
-            UpdateStore(true, false, wifiConnectionId_, true);
+            hotspotConnectionId_ = (ULong)random(1, 2147483647);
+            wifiConnectionId_ = 0;
+            UpdateStore(true, false, 0, true, hotspotConnectionId_);
             logger->Info(Tag::Untagged, StdString("[WifiConnection] Hotspot started successfully! AP IP Address: " + StdString(WiFi.softAPIP().toString().c_str())));
         } else {
             logger->Error(Tag::Untagged, StdString("[WifiConnection] Failed to start hotspot"));
@@ -143,7 +145,7 @@ class WifiConnection : public IWifiConnection {
             }
             WiFi.disconnect();
         }
-        UpdateStore(false, false, 0, false);
+        UpdateStore(false, false, 0, false, 0);
         currentMode = "";
         logger->Info(Tag::Untagged, StdString("[WifiConnection] Network disconnected"));
     }
