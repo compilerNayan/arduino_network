@@ -169,7 +169,17 @@ class NetworkConnection : public INetworkConnection {
     }
 
     Public Virtual Bool EnsureNetworkConnectivity() override {
-        return false;  // empty for now
+        if (IsHotspotConnected()) {
+            if (!wifiService->GetAllWifiCredentials().empty()) {
+                RestartNetwork();
+            }
+            return IsNetworkConnected();
+        }
+        if (IsWifiConnected()) {
+            return true;
+        }
+        RestartNetwork();
+        return IsNetworkConnected();
     }
 
     Public Virtual Void RestartNetwork() override {
