@@ -9,6 +9,10 @@
 /* @Component */
 class Sample : public ISample {
 
+    /* @Autowired */
+    Private ILoggerPtr logger;
+
+
 public:
     void foo() override {
         Serial.println("hello");
