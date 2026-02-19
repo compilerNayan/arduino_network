@@ -15,6 +15,7 @@ class IWifiConnectionStatusProvider {
     Public Virtual Bool IsHotspotConnected() const = 0;
     Public Virtual ULong GetWifiConnectionId() const = 0;
     Public Virtual ULong GetHotspotConnectionId() const = 0;
+    Public Virtual ULong GetNetworkConnectionId() const = 0;
 };
 
 #endif // IWIFICONNECTIONSTATUSPROVIDER_H
