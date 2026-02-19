@@ -23,12 +23,14 @@ class WifiConnection : public IWifiConnection {
 
     Private StdString currentMode;
     Private ULong wifiConnectionId_ = 0;
+    Private ULong hotspotConnectionId_ = 0;
 
-    Private Void UpdateStore(Bool networkConnected, Bool wifiConnected, ULong connectionId, Bool hotspotConnected) {
+    Private Void UpdateStore(Bool networkConnected, Bool wifiConnected, ULong wifiConnectionId, Bool hotspotConnected, ULong hotspotConnectionId) {
         statusStore->SetNetworkConnected(networkConnected);
         statusStore->SetWifiConnected(wifiConnected);
         statusStore->SetHotspotConnected(hotspotConnected);
-        statusStore->SetWifiConnectionId(connectionId);
+        statusStore->SetWifiConnectionId(wifiConnectionId);
+        statusStore->SetHotspotConnectionId(hotspotConnectionId);
     }
 
     Private Bool TryConnectToWifi(const StdString& ssid, const StdString& password) {
@@ -46,7 +48,7 @@ class WifiConnection : public IWifiConnection {
         }
         if (WiFi.status() == WL_CONNECTED) {
             wifiConnectionId_ = (ULong)random(1, 2147483647);
-            UpdateStore(true, true, wifiConnectionId_, false);
+            UpdateStore(true, true, wifiConnectionId_, false, 0);
             logger->Info(Tag::Untagged, StdString("[WifiConnection] WiFi connected successfully! IP Address: " + StdString(WiFi.localIP().toString().c_str())));
             return true;
         }
@@ -70,7 +72,7 @@ class WifiConnection : public IWifiConnection {
             return false;
         }
         wifiService->UpdateLastConnectedSsid(ssid);
-        UpdateStore(true, true, wifiConnectionId_, false);
+        UpdateStore(true, true, wifiConnectionId_, false, 0);
         logger->Info(Tag::Untagged, StdString("[WifiConnection] Successfully connected to last connected WiFi"));
         return true;
     }
@@ -91,7 +93,7 @@ class WifiConnection : public IWifiConnection {
             logger->Info(Tag::Untagged, StdString("[WifiConnection] Trying credential " + std::to_string(i + 1) + " of " + std::to_string(allCredentials.size()) + " - SSID: " + ssid));
             if (TryConnectToWifi(ssid, password)) {
                 wifiService->UpdateLastConnectedSsid(ssid);
-                UpdateStore(true, true, wifiConnectionId_, false);
+                UpdateStore(true, true, wifiConnectionId_, false, 0);
                 logger->Info(Tag::Untagged, StdString("[WifiConnection] Successfully connected to WiFi: " + ssid));
                 logger->Info(Tag::Untagged, StdString("[WifiConnection] Updated last connected WiFi"));
                 return true;

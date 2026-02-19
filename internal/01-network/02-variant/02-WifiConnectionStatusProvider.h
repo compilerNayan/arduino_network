@@ -28,6 +28,10 @@ class WifiConnectionStatusProvider : public IWifiConnectionStatusProvider {
     Public ULong GetWifiConnectionId() const override {
         return store->GetWifiConnectionId();
     }
+
+    Public ULong GetHotspotConnectionId() const override {
+        return store->GetHotspotConnectionId();
+    }
 };
 
 #endif // WIFICONNECTIONSTATUSPROVIDER_H
