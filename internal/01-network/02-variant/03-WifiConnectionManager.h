@@ -1,6 +1,6 @@
 #ifdef ARDUINO
-#ifndef WIFICONNECTION_H
-#define WIFICONNECTION_H
+#ifndef WIFICONNECTIONMANAGER_H
+#define WIFICONNECTIONMANAGER_H
 
 #include "../01-interface/03-IWifiConnectionManager.h"
 #include "../01-interface/01-IWifiConnectionStatusStore.h"
@@ -193,5 +193,5 @@ class WifiConnectionManager : public IWifiConnectionManager {
     }
 };
 
-#endif // WIFICONNECTION_H
+#endif // WIFICONNECTIONMANAGER_H
 #endif // ARDUINO

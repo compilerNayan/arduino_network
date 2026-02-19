@@ -1,5 +1,5 @@
-#ifndef IWIFICONNECTIONManager_H
-#define IWIFICONNECTIONManager_H
+#ifndef IWIFICONNECTIONMANAGER_H
+#define IWIFICONNECTIONMANAGER_H
 
 #include <StandardDefines.h>
 
@@ -22,4 +22,4 @@ class IWifiConnectionManager {
     Public Virtual Void RestartNetwork() = 0;
 };
 
-#endif // IWIFICONNECTIONManager_H
+#endif // IWIFICONNECTIONMANAGER_H
