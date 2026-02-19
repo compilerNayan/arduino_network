@@ -11,17 +11,10 @@
 /* @Component */
 class WifiConnectionStatusStore : public IWifiConnectionStatusStore {
     Private mutable std::mutex mutex_;
-    Private Bool networkConnected_{false};
     Private Bool wifiConnected_{false};
     Private Bool hotspotConnected_{false};
     Private ULong wifiConnectionId_{0};
     Private ULong hotspotConnectionId_{0};
-    Private ULong networkConnectionId_{0};
-
-    Public Bool IsNetworkConnected() const override {
-        std::lock_guard<std::mutex> lock(mutex_);
-        return networkConnected_;
-    }
 
     Public Bool IsWifiConnected() const override {
         std::lock_guard<std::mutex> lock(mutex_);
@@ -43,20 +36,13 @@ class WifiConnectionStatusStore : public IWifiConnectionStatusStore {
         return hotspotConnectionId_;
     }
 
-    Public ULong GetNetworkConnectionId() const override {
+    Public Void SetState(Bool wifiConnected, Bool hotspotConnected,
+                        ULong wifiConnectionId, ULong hotspotConnectionId) override {
         std::lock_guard<std::mutex> lock(mutex_);
-        return networkConnectionId_;
-    }
-
-    Public Void SetState(Bool networkConnected, Bool wifiConnected, Bool hotspotConnected,
-                        ULong wifiConnectionId, ULong hotspotConnectionId, ULong networkConnectionId) override {
-        std::lock_guard<std::mutex> lock(mutex_);
-        networkConnected_ = static_cast<bool>(networkConnected);
         wifiConnected_ = static_cast<bool>(wifiConnected);
         hotspotConnected_ = static_cast<bool>(hotspotConnected);
         wifiConnectionId_ = wifiConnectionId;
         hotspotConnectionId_ = hotspotConnectionId;
-        networkConnectionId_ = networkConnectionId;
     }
 };
 

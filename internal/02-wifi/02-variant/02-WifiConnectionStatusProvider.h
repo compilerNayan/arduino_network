@@ -3,6 +3,7 @@
 
 #include "../01-interface/02-IWifiConnectionStatusProvider.h"
 #include "../01-interface/01-IWifiConnectionStatusStore.h"
+#include "../../01-network/00-public/01-INetworkStatusProvider.h"
 #include <StandardDefines.h>
 
 /**
@@ -13,8 +14,11 @@ class WifiConnectionStatusProvider : public IWifiConnectionStatusProvider {
     /* @Autowired */
     Private IWifiConnectionStatusStorePtr store;
 
+    /* @Autowired */
+    Private INetworkStatusProviderPtr networkStatusProvider;
+
     Public Bool IsNetworkConnected() const override {
-        return store->IsNetworkConnected();
+        return networkStatusProvider->IsNetworkConnected();
     }
 
     Public Bool IsWifiConnected() const override {
@@ -34,7 +38,9 @@ class WifiConnectionStatusProvider : public IWifiConnectionStatusProvider {
     }
 
     Public ULong GetNetworkConnectionId() const override {
-        return store->GetNetworkConnectionId();
+        ULong w = store->GetWifiConnectionId();
+        ULong h = store->GetHotspotConnectionId();
+        return w ? w : h;
     }
 };
 

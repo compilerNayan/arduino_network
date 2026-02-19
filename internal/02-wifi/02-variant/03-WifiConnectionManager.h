@@ -25,8 +25,8 @@ class WifiConnectionManager : public IWifiConnectionManager {
     Private ULong wifiConnectionId_ = 0;
     Private ULong hotspotConnectionId_ = 0;
 
-    Private Void UpdateStore(Bool networkConnected, Bool wifiConnected, ULong wifiConnectionId, Bool hotspotConnected, ULong hotspotConnectionId, ULong networkConnectionId) {
-        statusStore->SetState(networkConnected, wifiConnected, hotspotConnected, wifiConnectionId, hotspotConnectionId, networkConnectionId);
+    Private Void UpdateStore(Bool wifiConnected, Bool hotspotConnected, ULong wifiConnectionId, ULong hotspotConnectionId) {
+        statusStore->SetState(wifiConnected, hotspotConnected, wifiConnectionId, hotspotConnectionId);
     }
 
     Private Bool TryConnectToWifi(const StdString& ssid, const StdString& password) {
@@ -45,7 +45,7 @@ class WifiConnectionManager : public IWifiConnectionManager {
         if (OSAL_WifiIsConnected()) {
             wifiConnectionId_ = OSAL_GenerateConnectionId();
             hotspotConnectionId_ = 0;
-            UpdateStore(true, true, wifiConnectionId_, false, 0, wifiConnectionId_);
+            UpdateStore(true, false, wifiConnectionId_, 0);
             logger->Info(Tag::Untagged, StdString("[WifiConnection] WiFi connected successfully! IP Address: " + OSAL_WifiGetLocalIpString()));
             return true;
         }
@@ -69,7 +69,7 @@ class WifiConnectionManager : public IWifiConnectionManager {
             return false;
         }
         wifiService->UpdateLastConnectedSsid(ssid);
-        UpdateStore(true, true, wifiConnectionId_, false, 0, wifiConnectionId_);
+        UpdateStore(true, false, wifiConnectionId_, 0);
         logger->Info(Tag::Untagged, StdString("[WifiConnection] Successfully connected to last connected WiFi"));
         return true;
     }
@@ -90,7 +90,7 @@ class WifiConnectionManager : public IWifiConnectionManager {
             logger->Info(Tag::Untagged, StdString("[WifiConnection] Trying credential " + std::to_string(i + 1) + " of " + std::to_string(allCredentials.size()) + " - SSID: " + ssid));
             if (TryConnectToWifi(ssid, password)) {
                 wifiService->UpdateLastConnectedSsid(ssid);
-                UpdateStore(true, true, wifiConnectionId_, false, 0, wifiConnectionId_);
+                UpdateStore(true, false, wifiConnectionId_, 0);
                 logger->Info(Tag::Untagged, StdString("[WifiConnection] Successfully connected to WiFi: " + ssid));
                 logger->Info(Tag::Untagged, StdString("[WifiConnection] Updated last connected WiFi"));
                 return true;
@@ -112,7 +112,7 @@ class WifiConnectionManager : public IWifiConnectionManager {
             currentMode = "hotspot";
             hotspotConnectionId_ = OSAL_GenerateConnectionId();
             wifiConnectionId_ = 0;
-            UpdateStore(true, false, 0, true, hotspotConnectionId_, hotspotConnectionId_);
+            UpdateStore(false, true, 0, hotspotConnectionId_);
             logger->Info(Tag::Untagged, StdString("[WifiConnection] Hotspot started successfully! AP IP Address: " + OSAL_WifiGetSoftApIpString()));
         } else {
             logger->Error(Tag::Untagged, StdString("[WifiConnection] Failed to start hotspot"));
@@ -141,7 +141,7 @@ class WifiConnectionManager : public IWifiConnectionManager {
             }
             OSAL_WifiDisconnect();
         }
-        UpdateStore(false, false, 0, false, 0, 0);
+        UpdateStore(false, false, 0, 0);
         currentMode = "";
         logger->Info(Tag::Untagged, StdString("[WifiConnection] Network disconnected"));
     }
