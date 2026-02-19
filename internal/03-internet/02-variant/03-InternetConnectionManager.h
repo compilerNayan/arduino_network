@@ -8,12 +8,7 @@
 #include <StandardDefines.h>
 #include <ILogger.h>
 #include <OSAL_Core.h>
-#if defined(ESP8266)
-#include <ESP8266WiFi.h>
-#else
-#include <WiFi.h>
-#include <WiFiClient.h>
-#endif
+#include <OSAL_WiFiClient.h>
 
 namespace {
 struct InternetCheckPair {
@@ -51,15 +46,15 @@ class InternetConnectionManager : public IInternetConnectionManager {
         const InternetCheckPair& pair = kInternetCheckPairs[nextInternetCheckPairIndex_];
         nextInternetCheckPairIndex_ = (nextInternetCheckPairIndex_ + 1) % kNumInternetCheckPairs;
 
-        WiFiClient client;
-        if (client.connect(pair.ip1, 53, 2000)) {
-            client.stop();
+        OSAL_WiFiClient client;
+        if (client.Connect(pair.ip1, 53, 2000)) {
+            client.Stop();
             internetStatusStore->SetState(true, OSAL_GenerateConnectionId());
             return true;
         }
         logger->Warning(Tag::Untagged, StdString("[InternetConnection] Internet check failed for " + StdString(pair.ip1)));
-        if (client.connect(pair.ip2, 53, 2000)) {
-            client.stop();
+        if (client.Connect(pair.ip2, 53, 2000)) {
+            client.Stop();
             internetStatusStore->SetState(true, OSAL_GenerateConnectionId());
             return true;
         }
@@ -109,8 +104,6 @@ class InternetConnectionManager : public IInternetConnectionManager {
     }
 
     Public Virtual Bool EnsureInternetConnectivity() override {
-        if (!wifiConnectionManager->EnsureNetworkConnectivity()) return false;
-        return HasInternet();
     }
 
     Public Virtual Void RestartNetwork() override {
