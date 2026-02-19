@@ -11,6 +11,7 @@
 class NetworkConnectionStatusStore : public INetworkConnectionStatusStore {
     Private std::atomic<bool> networkConnected_{false};
     Private std::atomic<bool> wifiConnected_{false};
+    Private std::atomic<ULong> networkConnectionId_{0};
 
     Public Bool IsNetworkConnected() const override {
         return networkConnected_.load(std::memory_order_relaxed);
@@ -26,6 +27,14 @@ class NetworkConnectionStatusStore : public INetworkConnectionStatusStore {
 
     Public Void SetWifiConnected(Bool connected) override {
         wifiConnected_.store(static_cast<bool>(connected), std::memory_order_relaxed);
+    }
+
+    Public ULong GetNetworkConnectionId() const override {
+        return networkConnectionId_.load(std::memory_order_relaxed);
+    }
+
+    Public Void SetNetworkConnectionId(ULong connectionId) override {
+        networkConnectionId_.store(connectionId, std::memory_order_relaxed);
     }
 };
 

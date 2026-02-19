@@ -20,6 +20,10 @@ class NetworkConnectionStatusProvider : public INetworkConnectionStatusProvider 
     Public Bool IsWifiConnected() const override {
         return store->IsWifiConnected();
     }
+
+    Public ULong GetNetworkConnectionId() const override {
+        return store->GetNetworkConnectionId();
+    }
 };
 
 #endif // NETWORKCONNECTIONSTATUSPROVIDER_H
