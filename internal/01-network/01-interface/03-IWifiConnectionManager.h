@@ -1,5 +1,5 @@
-#ifndef IWIFICONNECTION_H
-#define IWIFICONNECTION_H
+#ifndef IWIFICONNECTIONManager_H
+#define IWIFICONNECTIONManager_H
 
 #include <StandardDefines.h>
 
@@ -7,9 +7,9 @@
  * WiFi connection: connect/disconnect WiFi or hotspot, query status, ensure connectivity.
  * Mirrors INetworkManager for use in arduino_network.
  */
-DefineStandardPointers(IWifiConnection)
-class IWifiConnection {
-    Public Virtual ~IWifiConnection() = default;
+DefineStandardPointers(IWifiConnectionManager)
+class IWifiConnectionManager {
+    Public Virtual ~IWifiConnectionManager() = default;
 
     Public Virtual Void ConnectNetwork() = 0;
     Public Virtual Void DisconnectNetwork() = 0;
@@ -22,4 +22,4 @@ class IWifiConnection {
     Public Virtual Void RestartNetwork() = 0;
 };
 
-#endif // IWIFICONNECTION_H
+#endif // IWIFICONNECTIONManager_H

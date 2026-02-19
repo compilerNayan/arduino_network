@@ -2,7 +2,7 @@
 #ifndef WIFICONNECTION_H
 #define WIFICONNECTION_H
 
-#include "../01-interface/03-IWifiConnection.h"
+#include "../01-interface/03-IWifiConnectionManager.h"
 #include "../01-interface/01-IWifiConnectionStatusStore.h"
 #include <StandardDefines.h>
 #include <Thread.h>
@@ -15,7 +15,7 @@
 #include <Arduino.h>
 
 /* @Component */
-class WifiConnection : public IWifiConnection {
+class WifiConnectionManager : public IWifiConnectionManager {
     /* @Autowired */
     Private IWifiServicePtr wifiService;
     /* @Autowired */
@@ -121,7 +121,7 @@ class WifiConnection : public IWifiConnection {
         }
     }
 
-    Public Virtual ~WifiConnection() = default;
+    Public Virtual ~WifiConnectionManager() = default;
 
     Public Virtual Void ConnectNetwork() override {
         logger->Info(Tag::Untagged, StdString("[WifiConnection] ConnectNetwork() called"));
