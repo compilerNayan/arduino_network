@@ -1,23 +1,23 @@
-#ifndef INETWORKCONNECTIONSTATUSSTORE_H
-#define INETWORKCONNECTIONSTATUSSTORE_H
+#ifndef IWIFICONNECTIONSTATUSSTORE_H
+#define IWIFICONNECTIONSTATUSSTORE_H
 
 #include <StandardDefines.h>
 
 /**
  * Thread-safe store for network and WiFi connection status.
  */
-DefineStandardPointers(INetworkConnectionStatusStore)
-class INetworkConnectionStatusStore {
-    Public Virtual ~INetworkConnectionStatusStore() = default;
+DefineStandardPointers(IWifiConnectionStatusStore)
+class IWifiConnectionStatusStore {
+    Public Virtual ~IWifiConnectionStatusStore() = default;
 
     Public Virtual Bool IsNetworkConnected() const = 0;
     Public Virtual Bool IsWifiConnected() const = 0;
     Public Virtual Bool IsHotspotConnected() const = 0;
-    Public Virtual ULong GetNetworkConnectionId() const = 0;
+    Public Virtual ULong GetWifiConnectionId() const = 0;
     Public Virtual Void SetNetworkConnected(Bool connected) = 0;
     Public Virtual Void SetWifiConnected(Bool connected) = 0;
     Public Virtual Void SetHotspotConnected(Bool connected) = 0;
-    Public Virtual Void SetNetworkConnectionId(ULong connectionId) = 0;
+    Public Virtual Void SetWifiConnectionId(ULong connectionId) = 0;
 };
 
-#endif // INETWORKCONNECTIONSTATUSSTORE_H
+#endif // IWIFICONNECTIONSTATUSSTORE_H
