@@ -19,7 +19,7 @@ class IInternetConnectionManager {
     Public Virtual ULong GetWifiConnectionId() = 0;
     Public Virtual ULong GetNetworkConnectionId() = 0;
     Public Virtual Bool EnsureNetworkConnectivity() = 0;
-    Public Virtual Bool EnsureInternetConnectivity() = 0;
+    Public Virtual Bool VerifyInternetConnectivity() = 0;
     Public Virtual Void RestartNetwork() = 0;
 };
 

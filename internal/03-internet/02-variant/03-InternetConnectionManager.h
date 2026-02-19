@@ -103,7 +103,8 @@ class InternetConnectionManager : public IInternetConnectionManager {
         return wifiConnectionManager->EnsureNetworkConnectivity();
     }
 
-    Public Virtual Bool EnsureInternetConnectivity() override {
+    Public Virtual Bool VerifyInternetConnectivity() override {
+        return HasInternet();
     }
 
     Public Virtual Void RestartNetwork() override {
