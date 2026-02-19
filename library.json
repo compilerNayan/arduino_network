@@ -9,6 +9,7 @@
     "url": "https://github.com/compilerNayan/arduino_network.git"
   },
   "dependencies": {
+    "cpp_core": "https://github.com/compilerNayan/cpp_core.git",
     "cpp_logger": "https://github.com/compilerNayan/cpp_logger.git",
     "springbootplusplus": "https://github.com/compilerNayan/springbootplusplus.git"
   },
