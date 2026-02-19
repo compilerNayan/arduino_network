@@ -12,9 +12,11 @@ class INetworkConnectionStatusStore {
 
     Public Virtual Bool IsNetworkConnected() const = 0;
     Public Virtual Bool IsWifiConnected() const = 0;
+    Public Virtual Bool IsHotspotConnected() const = 0;
+    Public Virtual ULong GetNetworkConnectionId() const = 0;
     Public Virtual Void SetNetworkConnected(Bool connected) = 0;
     Public Virtual Void SetWifiConnected(Bool connected) = 0;
-    Public Virtual ULong GetNetworkConnectionId() const = 0;
+    Public Virtual Void SetHotspotConnected(Bool connected) = 0;
     Public Virtual Void SetNetworkConnectionId(ULong connectionId) = 0;
 };
 

@@ -12,6 +12,7 @@ class INetworkConnectionStatusProvider {
 
     Public Virtual Bool IsNetworkConnected() const = 0;
     Public Virtual Bool IsWifiConnected() const = 0;
+    Public Virtual Bool IsHotspotConnected() const = 0;
     Public Virtual ULong GetNetworkConnectionId() const = 0;
 };
 
