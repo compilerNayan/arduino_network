@@ -130,12 +130,12 @@ class WiFiConnectionManager : public IWiFiConnectionManager {
 
     Public Virtual Void DisconnectNetwork() override {
         logger->Info(Tag::Untagged, StdString("[WiFiConnection] DisconnectNetwork() called"));
-        WifiMode mode = OSAL_GetWifiMode();
-        if (mode == WifiMode::Ap || mode == WifiMode::ApSta) {
+        WiFiMode mode = OSAL_GetWiFiMode();
+        if (mode == WiFiMode::Ap || mode == WiFiMode::ApSta) {
             logger->Info(Tag::Untagged, StdString("[WiFiConnection] Stopping hotspot"));
             OSAL_WiFiSoftApDisconnect();
         }
-        if (mode == WifiMode::Sta || mode == WifiMode::ApSta) {
+        if (mode == WiFiMode::Sta || mode == WiFiMode::ApSta) {
             if (OSAL_WiFiIsConnected()) {
                 logger->Info(Tag::Untagged, StdString("[WiFiConnection] Disconnecting WiFi - Previous IP: " + OSAL_WiFiGetLocalIpString()));
             }
@@ -148,8 +148,8 @@ class WiFiConnectionManager : public IWiFiConnectionManager {
 
     Public Virtual Bool IsNetworkConnected() override {
         if (OSAL_WiFiIsConnected()) return true;
-        WifiMode mode = OSAL_GetWifiMode();
-        if (mode == WifiMode::Ap || mode == WifiMode::ApSta) return true;
+        WiFiMode mode = OSAL_GetWiFiMode();
+        if (mode == WiFiMode::Ap || mode == WiFiMode::ApSta) return true;
         return false;
     }
 
@@ -158,8 +158,8 @@ class WiFiConnectionManager : public IWiFiConnectionManager {
     }
 
     Public Virtual Bool IsHotspotConnected() override {
-        WifiMode mode = OSAL_GetWifiMode();
-        return (mode == WifiMode::Ap || mode == WifiMode::ApSta);
+        WiFiMode mode = OSAL_GetWiFiMode();
+        return (mode == WiFiMode::Ap || mode == WiFiMode::ApSta);
     }
 
     Public Virtual ULong GetWiFiConnectionId() override {
