@@ -15,8 +15,10 @@ class InternetHealthCheckerThread : public IRunnable {
     Private IInternetConnectionManagerPtr internetConnectionManager;
 
     Public Void Run() override {
-        internetConnectionManager->VerifyInternetConnectivity();
-        OSAL_DelayMs(5000);
+        while (true) {  
+            internetConnectionManager->VerifyInternetConnectivity();
+            OSAL_DelayMs(5000);
+        }
     }
 };
 

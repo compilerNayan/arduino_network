@@ -15,8 +15,10 @@ class WiFiHealthCheckerThread : public IRunnable {
     Private IWifiConnectionManagerPtr wifiConnectionManager;
 
     Public Void Run() override {
+        while (true) {  
         wifiConnectionManager->EnsureNetworkConnectivity();
-        OSAL_DelayMs(2000);
+            OSAL_DelayMs(2000);
+        }
     }
 };
 
