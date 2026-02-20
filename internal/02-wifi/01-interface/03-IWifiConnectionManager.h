@@ -5,7 +5,7 @@
 
 /**
  * WiFi connection: connect/disconnect WiFi or hotspot, query status, ensure connectivity.
- * Mirrors INetworkManager for use in arduino_network.
+ * Mirrors INetworkManager for use in 03_device_connectivity.
  */
 DefineStandardPointers(IWifiConnectionManager)
 class IWifiConnectionManager {

@@ -1,12 +1,12 @@
 cmake_minimum_required(VERSION 3.14)
-project(arduino_network VERSION 1.0.0 LANGUAGES CXX)
+project(03_device_connectivity VERSION 1.0.0 LANGUAGES CXX)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 include(FetchContent)
 
-# Fetch 01_osal (OSAL_Core, OSAL_WiFi)
+# Fetch 01_osal (osal/Core.h, osal/WiFi.h)
 FetchContent_Declare(
     01_osal
     GIT_REPOSITORY https://github.com/compilerNayan/01_osal.git
@@ -30,13 +30,13 @@ FetchContent_Declare(
 FetchContent_MakeAvailable(01_osal 02_cpp_utils springbootplusplus)
 
 # Header-only INTERFACE library (no source files); just includes cpp_logger
-add_library(arduino_network INTERFACE)
+add_library(03_device_connectivity INTERFACE)
 
-set_target_properties(arduino_network PROPERTIES
+set_target_properties(03_device_connectivity PROPERTIES
     VERSION ${PROJECT_VERSION}
 )
 
-target_include_directories(arduino_network INTERFACE
+target_include_directories(03_device_connectivity INTERFACE
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
     $<INSTALL_INTERFACE:include>
@@ -44,29 +44,29 @@ target_include_directories(arduino_network INTERFACE
 
 # Link to 01_osal (provides osal/OSAL_Core.h, osal/OSAL_WiFi.h)
 if(TARGET 01_osal::01_osal)
-    target_link_libraries(arduino_network INTERFACE 01_osal::01_osal)
+    target_link_libraries(03_device_connectivity INTERFACE 01_osal::01_osal)
 elseif(TARGET 01_osal)
-    target_link_libraries(arduino_network INTERFACE 01_osal)
+    target_link_libraries(03_device_connectivity INTERFACE 01_osal)
 endif()
 
 # Link to 02_cpp_utils (provides cpp_utils/StringUtils.h etc.)
 if(TARGET 02_cpp_utils::02_cpp_utils)
-    target_link_libraries(arduino_network INTERFACE 02_cpp_utils::02_cpp_utils)
+    target_link_libraries(03_device_connectivity INTERFACE 02_cpp_utils::02_cpp_utils)
 elseif(TARGET 02_cpp_utils)
-    target_link_libraries(arduino_network INTERFACE 02_cpp_utils)
+    target_link_libraries(03_device_connectivity INTERFACE 02_cpp_utils)
 endif()
 
 # Link to springbootplusplus
 # Try the namespaced target first, fallback to non-namespaced
 if(TARGET springbootplusplus::springbootplusplus)
-    target_link_libraries(arduino_network INTERFACE springbootplusplus::springbootplusplus)
+    target_link_libraries(03_device_connectivity INTERFACE springbootplusplus::springbootplusplus)
 elseif(TARGET springbootplusplus)
-    target_link_libraries(arduino_network INTERFACE springbootplusplus)
+    target_link_libraries(03_device_connectivity INTERFACE springbootplusplus)
 else()
     # Fallback: manually add include directory if target doesn't exist
     FetchContent_GetProperties(springbootplusplus)
     if(springbootplusplus_SOURCE_DIR)
-        target_include_directories(arduino_network INTERFACE
+        target_include_directories(03_device_connectivity INTERFACE
             $<BUILD_INTERFACE:${springbootplusplus_SOURCE_DIR}/src>
         )
     endif()
