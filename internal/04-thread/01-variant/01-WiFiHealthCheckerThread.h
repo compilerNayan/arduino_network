@@ -4,20 +4,26 @@
 #include <StandardDefines.h>
 #include <IRunnable.h>
 #include <OSAL_Core.h>
+#include <Arduino.h>
 
 #include "../../02-wifi/00-public/02-IWifiConnectionManager.h"
 
+/** Interval between checks (ms). Run() is called every loop; we only run the check when this much time has passed. */
+static constexpr ULong kWifiHealthCheckIntervalMs = 2000;
+
 /**
- * Periodically ensures network connectivity, then sleeps (e.g. for use in a thread loop).
+ * Ensures network connectivity periodically. Call Run() every loop from main thread; throttled so the check runs at most every kWifiHealthCheckIntervalMs.
  */
 class WiFiHealthCheckerThread : public IRunnable {
     /* @Autowired */
     Private IWifiConnectionManagerPtr wifiConnectionManager;
+    Private ULong lastRunMs_{0};
 
     Public Void Run() override {
-        while (true) {  
-        wifiConnectionManager->EnsureNetworkConnectivity();
-            OSAL_DelayMs(2000);
+        ULong now = static_cast<ULong>(millis());
+        if (now - lastRunMs_ >= kWifiHealthCheckIntervalMs) {
+            wifiConnectionManager->EnsureNetworkConnectivity();
+            lastRunMs_ = now;
         }
     }
 };

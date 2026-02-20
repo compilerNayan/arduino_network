@@ -4,20 +4,26 @@
 #include <StandardDefines.h>
 #include <IRunnable.h>
 #include <OSAL_Core.h>
+#include <Arduino.h>
 
 #include "../../03-internet/00-public/02-IInternetConnectionManager.h"
 
+/** Interval between checks (ms). Run() is called every loop; we only run the check when this much time has passed. */
+static constexpr ULong kInternetHealthCheckIntervalMs = 5000;
+
 /**
- * Periodically verifies internet connectivity, then sleeps (e.g. for use in a thread loop).
+ * Verifies internet connectivity periodically. Call Run() every loop from main thread; throttled so the check runs at most every kInternetHealthCheckIntervalMs.
  */
 class InternetHealthCheckerThread : public IRunnable {
     /* @Autowired */
     Private IInternetConnectionManagerPtr internetConnectionManager;
+    Private ULong lastRunMs_{0};
 
     Public Void Run() override {
-        while (true) {  
+        ULong now = static_cast<ULong>(millis());
+        if (now - lastRunMs_ >= kInternetHealthCheckIntervalMs) {
             internetConnectionManager->VerifyInternetConnectivity();
-            OSAL_DelayMs(5000);
+            lastRunMs_ = now;
         }
     }
 };
