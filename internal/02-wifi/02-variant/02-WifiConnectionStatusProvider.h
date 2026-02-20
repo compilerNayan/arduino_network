@@ -1,18 +1,18 @@
 #ifndef WIFICONNECTIONSTATUSPROVIDER_H
 #define WIFICONNECTIONSTATUSPROVIDER_H
 
-#include "../01-interface/02-IWifiConnectionStatusProvider.h"
-#include "../01-interface/01-IWifiConnectionStatusStore.h"
+#include "../01-interface/02-IWiFiConnectionStatusProvider.h"
+#include "../01-interface/01-IWiFiConnectionStatusStore.h"
 #include "../../01-network/00-public/01-INetworkStatusProvider.h"
 #include <StandardDefines.h>
 
 /**
- * Implementation that reads network/WiFi status from IWifiConnectionStatusStore.
+ * Implementation that reads network/WiFi status from IWiFiConnectionStatusStore.
  */
 /* @Component */
-class WifiConnectionStatusProvider : public IWifiConnectionStatusProvider {
+class WiFiConnectionStatusProvider : public IWiFiConnectionStatusProvider {
     /* @Autowired */
-    Private IWifiConnectionStatusStorePtr store;
+    Private IWiFiConnectionStatusStorePtr store;
 
     /* @Autowired */
     Private INetworkStatusProviderPtr networkStatusProvider;
@@ -21,16 +21,16 @@ class WifiConnectionStatusProvider : public IWifiConnectionStatusProvider {
         return networkStatusProvider->IsNetworkConnected();
     }
 
-    Public Bool IsWifiConnected() const override {
-        return store->IsWifiConnected();
+    Public Bool IsWiFiConnected() const override {
+        return store->IsWiFiConnected();
     }
 
     Public Bool IsHotspotConnected() const override {
         return store->IsHotspotConnected();
     }
 
-    Public ULong GetWifiConnectionId() const override {
-        return store->GetWifiConnectionId();
+    Public ULong GetWiFiConnectionId() const override {
+        return store->GetWiFiConnectionId();
     }
 
     Public ULong GetHotspotConnectionId() const override {
@@ -38,7 +38,7 @@ class WifiConnectionStatusProvider : public IWifiConnectionStatusProvider {
     }
 
     Public ULong GetNetworkConnectionId() const override {
-        ULong w = store->GetWifiConnectionId();
+        ULong w = store->GetWiFiConnectionId();
         ULong h = store->GetHotspotConnectionId();
         return w ? w : h;
     }

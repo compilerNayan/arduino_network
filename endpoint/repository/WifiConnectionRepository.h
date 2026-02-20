@@ -3,12 +3,12 @@
 
 #include <StandardDefines.h>
 #include "CpaRepository.h"
-#include "../entity/WifiConnection.h"
+#include "../entity/WiFiConnection.h"
 
 /* @Repository */
-DefineStandardPointers(WifiConnectionRepository)
-class WifiConnectionRepository : public CpaRepository<WifiConnection, int> {
-    Public Virtual ~WifiConnectionRepository() = default;
+DefineStandardPointers(WiFiConnectionRepository)
+class WiFiConnectionRepository : public CpaRepository<WiFiConnection, int> {
+    Public Virtual ~WiFiConnectionRepository() = default;
     
 };
 

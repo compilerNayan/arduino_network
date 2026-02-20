@@ -4,7 +4,7 @@
 #include <StandardDefines.h>
 
 /* @Entity */
-class WifiCredentials {
+class WiFiCredentials {
 
     /* @Id */
     /* @NotNull */

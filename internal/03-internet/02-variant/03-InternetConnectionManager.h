@@ -4,7 +4,7 @@
 
 #include "../01-interface/03-IInternetConnectionManager.h"
 #include "../01-interface/01-IInternetConnectionStatusStore.h"
-#include "../../02-wifi/01-interface/03-IWifiConnectionManager.h"
+#include "../../02-wifi/01-interface/03-IWiFiConnectionManager.h"
 #include <StandardDefines.h>
 #include <ILogger.h>
 #include <osal/Core.h>
@@ -33,7 +33,7 @@ const size_t kNumInternetCheckPairs = sizeof(kInternetCheckPairs) / sizeof(kInte
 /* @Component */
 class InternetConnectionManager : public IInternetConnectionManager {
     /* @Autowired */
-    Private IWifiConnectionManagerPtr wifiConnectionManager;
+    Private IWiFiConnectionManagerPtr wiFiConnectionManager;
     /* @Autowired */
     Private IInternetConnectionStatusStorePtr internetStatusStore;
     /* @Autowired */
@@ -66,41 +66,41 @@ class InternetConnectionManager : public IInternetConnectionManager {
     Public Virtual ~InternetConnectionManager() = default;
 
     Public Virtual Void ConnectNetwork() override {
-        wifiConnectionManager->ConnectNetwork();
+        wiFiConnectionManager->ConnectNetwork();
     }
 
     Public Virtual Void DisconnectNetwork() override {
-        wifiConnectionManager->DisconnectNetwork();
+        wiFiConnectionManager->DisconnectNetwork();
         internetStatusStore->SetState(false, 0);
     }
 
     Public Virtual Bool IsNetworkConnected() override {
-        return wifiConnectionManager->IsNetworkConnected();
+        return wiFiConnectionManager->IsNetworkConnected();
     }
 
     Public Virtual Bool IsWifiConnected() override {
-        return wifiConnectionManager->IsWifiConnected();
+        return wiFiConnectionManager->IsWifiConnected();
     }
 
     Public Virtual Bool IsHotspotConnected() override {
-        return wifiConnectionManager->IsHotspotConnected();
+        return wiFiConnectionManager->IsHotspotConnected();
     }
 
     Public Virtual Bool IsInternetConnected() override {
-        if (!wifiConnectionManager->IsNetworkConnected()) return false;
+        if (!wiFiConnectionManager->IsNetworkConnected()) return false;
         return HasInternet();
     }
 
     Public Virtual ULong GetWifiConnectionId() override {
-        return wifiConnectionManager->GetWifiConnectionId();
+        return wiFiConnectionManager->GetWifiConnectionId();
     }
 
     Public Virtual ULong GetNetworkConnectionId() override {
-        return wifiConnectionManager->GetNetworkConnectionId();
+        return wiFiConnectionManager->GetNetworkConnectionId();
     }
 
     Public Virtual Bool EnsureNetworkConnectivity() override {
-        return wifiConnectionManager->EnsureNetworkConnectivity();
+        return wiFiConnectionManager->EnsureNetworkConnectivity();
     }
 
     Public Virtual Bool VerifyInternetConnectivity() override {
@@ -108,7 +108,7 @@ class InternetConnectionManager : public IInternetConnectionManager {
     }
 
     Public Virtual Void RestartNetwork() override {
-        wifiConnectionManager->RestartNetwork();
+        wiFiConnectionManager->RestartNetwork();
         internetStatusStore->SetState(false, 0);
     }
 };

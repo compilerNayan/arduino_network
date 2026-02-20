@@ -1,7 +1,7 @@
 #ifndef WIFICONNECTIONSTATUSSTORE_H
 #define WIFICONNECTIONSTATUSSTORE_H
 
-#include "../01-interface/01-IWifiConnectionStatusStore.h"
+#include "../01-interface/01-IWiFiConnectionStatusStore.h"
 #include <StandardDefines.h>
 #include <mutex>
 
@@ -9,16 +9,16 @@
  * Thread-safe implementation: all state is updated under a mutex so reads/writes are consistent.
  */
 /* @Component */
-class WifiConnectionStatusStore : public IWifiConnectionStatusStore {
+class WiFiConnectionStatusStore : public IWiFiConnectionStatusStore {
     Private mutable std::mutex mutex_;
-    Private Bool wifiConnected_{false};
+    Private Bool wiFiConnected_{false};
     Private Bool hotspotConnected_{false};
-    Private ULong wifiConnectionId_{0};
+    Private ULong wiFiConnectionId_{0};
     Private ULong hotspotConnectionId_{0};
 
-    Public Bool IsWifiConnected() const override {
+    Public Bool IsWiFiConnected() const override {
         std::lock_guard<std::mutex> lock(mutex_);
-        return wifiConnected_;
+        return wiFiConnected_;
     }
 
     Public Bool IsHotspotConnected() const override {
@@ -26,9 +26,9 @@ class WifiConnectionStatusStore : public IWifiConnectionStatusStore {
         return hotspotConnected_;
     }
 
-    Public ULong GetWifiConnectionId() const override {
+    Public ULong GetWiFiConnectionId() const override {
         std::lock_guard<std::mutex> lock(mutex_);
-        return wifiConnectionId_;
+        return wiFiConnectionId_;
     }
 
     Public ULong GetHotspotConnectionId() const override {
@@ -36,12 +36,12 @@ class WifiConnectionStatusStore : public IWifiConnectionStatusStore {
         return hotspotConnectionId_;
     }
 
-    Public Void SetState(Bool wifiConnected, Bool hotspotConnected,
-                        ULong wifiConnectionId, ULong hotspotConnectionId) override {
+    Public Void SetState(Bool wiFiConnected, Bool hotspotConnected,
+                        ULong wiFiConnectionId, ULong hotspotConnectionId) override {
         std::lock_guard<std::mutex> lock(mutex_);
-        wifiConnected_ = static_cast<bool>(wifiConnected);
+        wiFiConnected_ = static_cast<bool>(wiFiConnected);
         hotspotConnected_ = static_cast<bool>(hotspotConnected);
-        wifiConnectionId_ = wifiConnectionId;
+        wiFiConnectionId_ = wiFiConnectionId;
         hotspotConnectionId_ = hotspotConnectionId;
     }
 };

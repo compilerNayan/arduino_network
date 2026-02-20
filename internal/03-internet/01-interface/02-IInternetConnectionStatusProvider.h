@@ -11,10 +11,10 @@ class IInternetConnectionStatusProvider {
     Public Virtual ~IInternetConnectionStatusProvider() = default;
 
     Public Virtual Bool IsNetworkConnected() const = 0;
-    Public Virtual Bool IsWifiConnected() const = 0;
+    Public Virtual Bool IsWiFiConnected() const = 0;
     Public Virtual Bool IsHotspotConnected() const = 0;
     Public Virtual Bool IsInternetConnected() const = 0;
-    Public Virtual ULong GetWifiConnectionId() const = 0;
+    Public Virtual ULong GetWiFiConnectionId() const = 0;
     Public Virtual ULong GetHotspotConnectionId() const = 0;
     Public Virtual ULong GetNetworkConnectionId() const = 0;
     Public Virtual ULong GetInternetConnectionId() const = 0;

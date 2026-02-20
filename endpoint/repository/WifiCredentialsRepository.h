@@ -3,12 +3,12 @@
 
 #include <StandardDefines.h>
 #include "CpaRepository.h"
-#include "../entity/WifiCredentials.h"
+#include "../entity/WiFiCredentials.h"
 
 /* @Repository */
-DefineStandardPointers(WifiCredentialsRepository)
-class WifiCredentialsRepository : public CpaRepository<WifiCredentials, StdString> {
-    Public Virtual ~WifiCredentialsRepository() = default;
+DefineStandardPointers(WiFiCredentialsRepository)
+class WiFiCredentialsRepository : public CpaRepository<WiFiCredentials, StdString> {
+    Public Virtual ~WiFiCredentialsRepository() = default;
     
     // Additional custom repository methods can be added here
     // The base CRUD methods are inherited from CpaRepository

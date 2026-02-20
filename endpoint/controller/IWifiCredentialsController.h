@@ -2,29 +2,29 @@
 #define IWIFI_CREDENTIALS_CONTROLLER_H
 
 #include <StandardDefines.h>
-#include "../entity/WifiCredentials.h"
+#include "../entity/WiFiCredentials.h"
 
-DefineStandardPointers(IWifiCredentialsController)
-class IWifiCredentialsController {
-    Public Virtual ~IWifiCredentialsController() = default;
+DefineStandardPointers(IWiFiCredentialsController)
+class IWiFiCredentialsController {
+    Public Virtual ~IWiFiCredentialsController() = default;
 
     // Create - Add new WiFi credentials
-    Public Virtual WifiCredentials CreateWifiCredentials(WifiCredentials credentials) = 0;
+    Public Virtual WiFiCredentials CreateWiFiCredentials(WiFiCredentials credentials) = 0;
 
     // Read - Get WiFi credentials by SSID
-    Public Virtual WifiCredentials GetWifiCredentials(StdString ssid) = 0;
+    Public Virtual WiFiCredentials GetWiFiCredentials(StdString ssid) = 0;
 
     // Read All - Get all WiFi credentials
-    Public Virtual StdVector<WifiCredentials> GetAllWifiCredentials() = 0;
+    Public Virtual StdVector<WiFiCredentials> GetAllWiFiCredentials() = 0;
 
     // Update - Update existing WiFi credentials
-    Public Virtual WifiCredentials UpdateWifiCredentials(WifiCredentials credentials) = 0;
+    Public Virtual WiFiCredentials UpdateWiFiCredentials(WiFiCredentials credentials) = 0;
 
     // Delete - Delete WiFi credentials by SSID
-    Public Virtual Void DeleteWifiCredentials(StdString ssid) = 0;
+    Public Virtual Void DeleteWiFiCredentials(StdString ssid) = 0;
 
     // Get last connected WiFi
-    Public Virtual optional<WifiCredentials> GetLastConnectedWifi() = 0;
+    Public Virtual optional<WiFiCredentials> GetLastConnectedWiFi() = 0;
 };
 
 #endif // IWIFI_CREDENTIALS_CONTROLLER_H

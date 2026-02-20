@@ -2,29 +2,29 @@
 #define IWIFISERVICE_H
 
 #include <StandardDefines.h>
-#include "../entity/WifiCredentials.h"
+#include "../entity/WiFiCredentials.h"
 
-DefineStandardPointers(IWifiService)
-class IWifiService {
-    Public Virtual ~IWifiService() = default;
+DefineStandardPointers(IWiFiService)
+class IWiFiService {
+    Public Virtual ~IWiFiService() = default;
 
     // Add WiFi credentials
-    Public Virtual WifiCredentials AddWifiCredentials(const WifiCredentials& credentials) = 0;
+    Public Virtual WiFiCredentials AddWiFiCredentials(const WiFiCredentials& credentials) = 0;
 
     // Update WiFi credentials
-    Public Virtual WifiCredentials UpdateWifiCredentials(const WifiCredentials& credentials) = 0;
+    Public Virtual WiFiCredentials UpdateWiFiCredentials(const WiFiCredentials& credentials) = 0;
 
     // Delete WiFi credentials by SSID
-    Public Virtual Void DeleteWifiCredentials(const StdString& ssid) = 0;
+    Public Virtual Void DeleteWiFiCredentials(const StdString& ssid) = 0;
 
     // Read WiFi credentials by SSID
-    Public Virtual WifiCredentials GetWifiCredentials(const StdString& ssid) = 0;
+    Public Virtual WiFiCredentials GetWiFiCredentials(const StdString& ssid) = 0;
 
     // Get all WiFi credentials
-    Public Virtual StdVector<WifiCredentials> GetAllWifiCredentials() = 0;
+    Public Virtual StdVector<WiFiCredentials> GetAllWiFiCredentials() = 0;
 
     // Get last connected WiFi details
-    Public Virtual optional<WifiCredentials> GetLastConnectedWifi() = 0;
+    Public Virtual optional<WiFiCredentials> GetLastConnectedWiFi() = 0;
 
     // Update last connected SSID
     Public Virtual Void UpdateLastConnectedSsid(const StdString& ssid) = 0;

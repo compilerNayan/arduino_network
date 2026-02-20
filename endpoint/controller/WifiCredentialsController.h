@@ -2,56 +2,56 @@
 #define WIFI_CREDENTIALS_CONTROLLER_H
 
 #include <StandardDefines.h>
-#include "IWifiCredentialsController.h"
-#include "../service/IWifiService.h"
-#include "../entity/WifiCredentials.h"
+#include "IWiFiCredentialsController.h"
+#include "../service/IWiFiService.h"
+#include "../entity/WiFiCredentials.h"
 
 /* @RestController */
 /* @RequestMapping("/wifi-credentials") */
-class WifiCredentialsController : public IWifiCredentialsController {
+class WiFiCredentialsController : public IWiFiCredentialsController {
     Public
         /* @Autowired */
-        IWifiServicePtr wifiService;
+        IWiFiServicePtr wiFiService;
 
         // Create - Add new WiFi credentials
         /* @PostMapping("") */
-        Public Virtual WifiCredentials CreateWifiCredentials(/* @RequestBody */ WifiCredentials credentials) override {
-            return wifiService->AddWifiCredentials(credentials);
+        Public Virtual WiFiCredentials CreateWiFiCredentials(/* @RequestBody */ WiFiCredentials credentials) override {
+            return wiFiService->AddWiFiCredentials(credentials);
         }
 
         // Read - Get WiFi credentials by SSID
         /* @GetMapping("/{ssid}") */
-        Public Virtual WifiCredentials GetWifiCredentials(/* @PathVariable("ssid") */ StdString ssid) override {
+        Public Virtual WiFiCredentials GetWiFiCredentials(/* @PathVariable("ssid") */ StdString ssid) override {
             if (ssid.empty()) {
-                return WifiCredentials();
+                return WiFiCredentials();
             }
-            return wifiService->GetWifiCredentials(ssid);
+            return wiFiService->GetWiFiCredentials(ssid);
         }
 
         // Read All - Get all WiFi credentials
         /* @GetMapping("") */
-        Public Virtual StdVector<WifiCredentials> GetAllWifiCredentials() override {
-            return wifiService->GetAllWifiCredentials();
+        Public Virtual StdVector<WiFiCredentials> GetAllWiFiCredentials() override {
+            return wiFiService->GetAllWiFiCredentials();
         }
 
         // Update - Update existing WiFi credentials
         /* @PutMapping("") */
-        Public Virtual WifiCredentials UpdateWifiCredentials(/* @RequestBody */ WifiCredentials credentials) override {
-            return wifiService->UpdateWifiCredentials(credentials);
+        Public Virtual WiFiCredentials UpdateWiFiCredentials(/* @RequestBody */ WiFiCredentials credentials) override {
+            return wiFiService->UpdateWiFiCredentials(credentials);
         }
 
         // Delete - Delete WiFi credentials by SSID
         /* @DeleteMapping("/{ssid}") */
-        Public Virtual Void DeleteWifiCredentials(/* @PathVariable("ssid") */ StdString ssid) override {
+        Public Virtual Void DeleteWiFiCredentials(/* @PathVariable("ssid") */ StdString ssid) override {
             if (!ssid.empty()) {
-                wifiService->DeleteWifiCredentials(ssid);
+                wiFiService->DeleteWiFiCredentials(ssid);
             }
         }
 
         // Get last connected WiFi
         /* @GetMapping("/last-connected") */
-        Public Virtual optional<WifiCredentials> GetLastConnectedWifi() override {
-            return wifiService->GetLastConnectedWifi();
+        Public Virtual optional<WiFiCredentials> GetLastConnectedWiFi() override {
+            return wiFiService->GetLastConnectedWiFi();
         }
 };
 
