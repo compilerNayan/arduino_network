@@ -78,8 +78,8 @@ class InternetConnectionManager : public IInternetConnectionManager {
         return wiFiConnectionManager->IsNetworkConnected();
     }
 
-    Public Virtual Bool IsWifiConnected() override {
-        return wiFiConnectionManager->IsWifiConnected();
+    Public Virtual Bool IsWiFiConnected() override {
+        return wiFiConnectionManager->IsWiFiConnected();
     }
 
     Public Virtual Bool IsHotspotConnected() override {
@@ -91,8 +91,8 @@ class InternetConnectionManager : public IInternetConnectionManager {
         return HasInternet();
     }
 
-    Public Virtual ULong GetWifiConnectionId() override {
-        return wiFiConnectionManager->GetWifiConnectionId();
+    Public Virtual ULong GetWiFiConnectionId() override {
+        return wiFiConnectionManager->GetWiFiConnectionId();
     }
 
     Public Virtual ULong GetNetworkConnectionId() override {
