@@ -4,7 +4,6 @@
 #include <StandardDefines.h>
 #include <IRunnable.h>
 #include <OSAL_Core.h>
-#include <Arduino.h>
 
 #include "../../02-wifi/00-public/02-IWifiConnectionManager.h"
 
@@ -20,7 +19,7 @@ class WiFiHealthCheckerThread : public IRunnable {
     Private ULong lastRunMs_{0};
 
     Public Void Run() override {
-        ULong now = static_cast<ULong>(millis());
+        ULong now = OSAL_GetMillis();
         if (now - lastRunMs_ >= kWifiHealthCheckIntervalMs) {
             wifiConnectionManager->EnsureNetworkConnectivity();
             lastRunMs_ = now;
