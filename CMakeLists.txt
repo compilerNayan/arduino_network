@@ -13,6 +13,13 @@ FetchContent_Declare(
     GIT_TAG        main
 )
 
+# Fetch 02_cpp_utils (helper utilities)
+FetchContent_Declare(
+    02_cpp_utils
+    GIT_REPOSITORY https://github.com/compilerNayan/02_cpp_utils.git
+    GIT_TAG        main
+)
+
 # Fetch springbootplusplus
 FetchContent_Declare(
     springbootplusplus
@@ -20,7 +27,7 @@ FetchContent_Declare(
     GIT_TAG        main
 )
 
-FetchContent_MakeAvailable(01_osal springbootplusplus)
+FetchContent_MakeAvailable(01_osal 02_cpp_utils springbootplusplus)
 
 # Header-only INTERFACE library (no source files); just includes cpp_logger
 add_library(arduino_network INTERFACE)
@@ -40,6 +47,13 @@ if(TARGET 01_osal::01_osal)
     target_link_libraries(arduino_network INTERFACE 01_osal::01_osal)
 elseif(TARGET 01_osal)
     target_link_libraries(arduino_network INTERFACE 01_osal)
+endif()
+
+# Link to 02_cpp_utils (provides cpp_utils/Utils.h etc.)
+if(TARGET 02_cpp_utils::02_cpp_utils)
+    target_link_libraries(arduino_network INTERFACE 02_cpp_utils::02_cpp_utils)
+elseif(TARGET 02_cpp_utils)
+    target_link_libraries(arduino_network INTERFACE 02_cpp_utils)
 endif()
 
 # Link to springbootplusplus

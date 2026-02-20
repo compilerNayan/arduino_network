@@ -10,7 +10,8 @@
   },
   "dependencies": {
     "springbootplusplus": "https://github.com/compilerNayan/springbootplusplus.git",
-    "01_osal": "https://github.com/compilerNayan/01_osal.git"
+    "01_osal": "https://github.com/compilerNayan/01_osal.git",
+    "02_cpp_utils": "https://github.com/compilerNayan/02_cpp_utils.git"
   },
   "license": "MIT",
   "frameworks": "arduino",
