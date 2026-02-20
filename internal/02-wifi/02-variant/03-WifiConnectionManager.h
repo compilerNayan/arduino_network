@@ -5,6 +5,7 @@
 #include "../01-interface/03-IWifiConnectionManager.h"
 #include "../01-interface/01-IWifiConnectionStatusStore.h"
 #include <StandardDefines.h>
+#include <cpp_utils/StringUtils.h>
 #include <ILogger.h>
 #include "../../../endpoint/service/IWifiService.h"
 #include "../01-interface/01-IWifiConnectionStatusStore.h"
@@ -82,12 +83,12 @@ class WifiConnectionManager : public IWifiConnectionManager {
             logger->Warning(Tag::Untagged, StdString("[WifiConnection] No WiFi credentials found in database"));
             return false;
         }
-        logger->Info(Tag::Untagged, StdString("[WifiConnection] Found " + std::to_string(allCredentials.size()) + " WiFi credential(s) in database"));
+        logger->Info(Tag::Untagged, cpp_utils::Format("[WifiConnection] Found {} WiFi credential(s) in database", allCredentials.size()));
         for (size_t i = 0; i < allCredentials.size(); i++) {
             const WifiCredentials& cred = allCredentials[i];
             StdString ssid = cred.ssid.value();
             StdString password = cred.password.has_value() ? cred.password.value() : "";
-            logger->Info(Tag::Untagged, StdString("[WifiConnection] Trying credential " + std::to_string(i + 1) + " of " + std::to_string(allCredentials.size()) + " - SSID: " + ssid));
+            logger->Info(Tag::Untagged, StdString("[WifiConnection] Trying credential " + cpp_utils::ToString(i + 1) + " of " + cpp_utils::ToString(allCredentials.size()) + " - SSID: " + ssid));
             if (TryConnectToWifi(ssid, password)) {
                 wifiService->UpdateLastConnectedSsid(ssid);
                 UpdateStore(true, false, wifiConnectionId_, 0);

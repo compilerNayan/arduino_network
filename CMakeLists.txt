@@ -49,7 +49,7 @@ elseif(TARGET 01_osal)
     target_link_libraries(arduino_network INTERFACE 01_osal)
 endif()
 
-# Link to 02_cpp_utils (provides cpp_utils/Utils.h etc.)
+# Link to 02_cpp_utils (provides cpp_utils/StringUtils.h etc.)
 if(TARGET 02_cpp_utils::02_cpp_utils)
     target_link_libraries(arduino_network INTERFACE 02_cpp_utils::02_cpp_utils)
 elseif(TARGET 02_cpp_utils)
