@@ -10,8 +10,8 @@
 #include "../../../endpoint/service/IWifiService.h"
 #include "../01-interface/01-IWifiConnectionStatusStore.h"
 #include "../../../endpoint/entity/WifiCredentials.h"
-#include <OSAL_Core.h>
-#include <OSAL_WiFi.h>
+#include <osal/Core.h>
+#include <osal/WiFi.h>
 
 /* @Component */
 class WifiConnectionManager : public IWifiConnectionManager {

@@ -3,7 +3,7 @@
 
 #include <StandardDefines.h>
 #include <IRunnable.h>
-#include <OSAL_Core.h>
+#include <osal/Core.h>
 
 #include "../../03-internet/00-public/02-IInternetConnectionManager.h"
 

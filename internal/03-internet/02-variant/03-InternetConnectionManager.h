@@ -7,8 +7,8 @@
 #include "../../02-wifi/01-interface/03-IWifiConnectionManager.h"
 #include <StandardDefines.h>
 #include <ILogger.h>
-#include <OSAL_Core.h>
-#include <OSAL_WiFiClient.h>
+#include <osal/Core.h>
+#include <osal/WiFiClient.h>
 
 namespace {
 struct InternetCheckPair {
