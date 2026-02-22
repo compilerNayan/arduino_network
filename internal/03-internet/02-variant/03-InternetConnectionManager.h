@@ -49,12 +49,14 @@ class InternetConnectionManager : public IInternetConnectionManager {
         OSAL_WiFiClient client;
         if (client.Connect(pair.ip1, 53, 2000)) {
             client.Stop();
-            internetStatusStore->SetState(true, OSAL_GenerateConnectionId());
+            ULong currentId = internetStatusStore->GetInternetConnectionId();
+            internetStatusStore->SetState(true, currentId != 0 ? currentId : OSAL_GenerateConnectionId());
             return true;
         }
         if (client.Connect(pair.ip2, 53, 2000)) {
             client.Stop();
-            internetStatusStore->SetState(true, OSAL_GenerateConnectionId());
+            ULong currentId = internetStatusStore->GetInternetConnectionId();
+            internetStatusStore->SetState(true, currentId != 0 ? currentId : OSAL_GenerateConnectionId());
             return true;
         }
         logger->Warning(Tag::Untagged, StdString("[InternetConnection] Internet check failed for both " + StdString(pair.ip1) + " and " + StdString(pair.ip2)));
