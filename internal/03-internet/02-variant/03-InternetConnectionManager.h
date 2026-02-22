@@ -52,13 +52,12 @@ class InternetConnectionManager : public IInternetConnectionManager {
             internetStatusStore->SetState(true, OSAL_GenerateConnectionId());
             return true;
         }
-        logger->Warning(Tag::Untagged, StdString("[InternetConnection] Internet check failed for " + StdString(pair.ip1)));
         if (client.Connect(pair.ip2, 53, 2000)) {
             client.Stop();
             internetStatusStore->SetState(true, OSAL_GenerateConnectionId());
             return true;
         }
-        logger->Warning(Tag::Untagged, StdString("[InternetConnection] Internet check failed for " + StdString(pair.ip2)));
+        logger->Warning(Tag::Untagged, StdString("[InternetConnection] Internet check failed for both " + StdString(pair.ip1) + " and " + StdString(pair.ip2)));
         internetStatusStore->SetState(false, 0);
         return false;
     }
@@ -104,6 +103,9 @@ class InternetConnectionManager : public IInternetConnectionManager {
     }
 
     Public Virtual Bool VerifyInternetConnectivity() override {
+        if(IsHotspotConnected()) {
+            return false;
+        }
         return HasInternet();
     }
 
