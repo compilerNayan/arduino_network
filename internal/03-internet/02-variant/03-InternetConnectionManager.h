@@ -51,12 +51,16 @@ class InternetConnectionManager : public IInternetConnectionManager {
             client.Stop();
             ULong currentId = internetStatusStore->GetInternetConnectionId();
             internetStatusStore->SetState(true, currentId != 0 ? currentId : OSAL_GenerateConnectionId());
+            if (currentId == 0)
+                logger->Info(Tag::Untagged, StdString("[InternetConnection] Internet check succeeded via " + StdString(pair.ip1) + " (connection id set)"));
             return true;
         }
         if (client.Connect(pair.ip2, 53, 2000)) {
             client.Stop();
             ULong currentId = internetStatusStore->GetInternetConnectionId();
             internetStatusStore->SetState(true, currentId != 0 ? currentId : OSAL_GenerateConnectionId());
+            if (currentId == 0)
+                logger->Info(Tag::Untagged, StdString("[InternetConnection] Internet check succeeded via " + StdString(pair.ip2) + " (connection id set)"));
             return true;
         }
         logger->Warning(Tag::Untagged, StdString("[InternetConnection] Internet check failed for both " + StdString(pair.ip1) + " and " + StdString(pair.ip2)));
@@ -73,6 +77,7 @@ class InternetConnectionManager : public IInternetConnectionManager {
     Public Virtual Void DisconnectNetwork() override {
         wiFiConnectionManager->DisconnectNetwork();
         internetStatusStore->SetState(false, 0);
+        if (logger) logger->Info(Tag::Untagged, StdString("[InternetConnection] DisconnectNetwork: connection id cleared"));
     }
 
     Public Virtual Bool IsNetworkConnected() override {
@@ -114,6 +119,7 @@ class InternetConnectionManager : public IInternetConnectionManager {
     Public Virtual Void RestartNetwork() override {
         wiFiConnectionManager->RestartNetwork();
         internetStatusStore->SetState(false, 0);
+        if (logger) logger->Info(Tag::Untagged, StdString("[InternetConnection] RestartNetwork: connection id cleared"));
     }
 };
 
