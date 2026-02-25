@@ -19,6 +19,7 @@ class WiFiHealthCheckerThread : public IRunnable {
     Private ULong lastRunMs_{0};
 
     Public Void Run() override {
+        Thread::Sleep(3000);
         while (true) {
             wiFiConnectionManager->EnsureNetworkConnectivity();
             Thread::Sleep(kWiFiHealthCheckIntervalMs);
