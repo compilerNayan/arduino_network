@@ -19,10 +19,9 @@ class InternetHealthCheckerThread : public IRunnable {
     Private ULong lastRunMs_{0};
 
     Public Void Run() override {
-        ULong now = OSAL_GetMillis();
-        if (now - lastRunMs_ >= kInternetHealthCheckIntervalMs) {
+        while (true) {
             internetConnectionManager->VerifyInternetConnectivity();
-            lastRunMs_ = now;
+            Thread::Sleep(kInternetHealthCheckIntervalMs);
         }
     }
 };

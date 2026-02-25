@@ -19,10 +19,9 @@ class WiFiHealthCheckerThread : public IRunnable {
     Private ULong lastRunMs_{0};
 
     Public Void Run() override {
-        ULong now = OSAL_GetMillis();
-        if (now - lastRunMs_ >= kWiFiHealthCheckIntervalMs) {
+        while (true) {
             wiFiConnectionManager->EnsureNetworkConnectivity();
-            lastRunMs_ = now;
+            Thread::Sleep(kWiFiHealthCheckIntervalMs);
         }
     }
 };
