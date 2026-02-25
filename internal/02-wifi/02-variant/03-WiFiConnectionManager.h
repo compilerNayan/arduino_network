@@ -11,6 +11,7 @@
 #include "../../../endpoint/entity/WiFiCredentials.h"
 #include <osal/Core.h>
 #include <osal/WiFi.h>
+#include "esp_task_wdt.h"
 
 /* @Component */
 class WiFiConnectionManager : public IWiFiConnectionManager {
@@ -39,7 +40,10 @@ class WiFiConnectionManager : public IWiFiConnectionManager {
         currentMode = "wiFi";
         int attempts = 0;
         while (!OSAL_WiFiIsConnected() && attempts < 5) {
-            OSAL_DelayMs(500);
+            esp_task_wdt_reset();  // avoid task watchdog while waiting for WiFi
+            for (int i = 0; i < 5; ++i) {
+                OSAL_DelayMs(100);  // yield often so IDLE task can run
+            }
             attempts++;
         }
         if (OSAL_WiFiIsConnected()) {
@@ -189,7 +193,9 @@ class WiFiConnectionManager : public IWiFiConnectionManager {
     Public Virtual Void RestartNetwork() override {
         logger->Info(Tag::Untagged, StdString("[WiFiConnection] RestartNetwork() called"));
         DisconnectNetwork();
+        esp_task_wdt_reset();
         OSAL_DelayMs(1000);
+        esp_task_wdt_reset();
         logger->Info(Tag::Untagged, StdString("[WiFiConnection] Reconnecting..."));
         ConnectNetwork();
     }
