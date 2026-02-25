@@ -19,6 +19,8 @@ class InternetHealthCheckerThread : public IRunnable {
     Private ULong lastRunMs_{0};
 
     Public Void Run() override {
+        internetConnectionManager->VerifyInternetConnectivity();
+
         /* while (true) {
             internetConnectionManager->VerifyInternetConnectivity();
             Thread::Sleep(kInternetHealthCheckIntervalMs);
