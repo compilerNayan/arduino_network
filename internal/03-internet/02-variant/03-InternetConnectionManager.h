@@ -110,11 +110,10 @@ class InternetConnectionManager : public IInternetConnectionManager {
     }
 
     Public Virtual Bool VerifyInternetConnectivity() override {
-        return false;
-        /* if(IsHotspotConnected()) {
+        if(IsHotspotConnected()) {
             return false;
         }
-        return HasInternet(); */
+        /* return HasInternet(); */
     }
 
     Public Virtual Void RestartNetwork() override {
